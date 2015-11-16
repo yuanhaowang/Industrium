@@ -1,0 +1,35 @@
+module testbench();
+
+timeunit 10ns;
+
+timeprecision 1ns;
+
+logic  [127:0]  Plaintext, Cipherkey; //actuall encrypted message
+logic          Clk=0, 
+			 Reset,
+			 Run;
+logic[127:0]  Ciphertext; //actually decrypted message
+logic         Ready;
+logic [127:0] so,so1,so2,so3, releasestate;
+
+AES aes0(.*); 
+
+always begin : CLOCK_GENERATION
+#1 Clk = ~Clk;
+
+end
+
+
+initial begin: TEST_VECTORS
+
+Plaintext = 128'hdaec3055df058e1c39e814ea76f6747e;
+Cipherkey = 128'h000102030405060708090a0b0c0d0e0f;
+Reset = 1;
+Run = 0;
+
+#10 Reset = 0;
+#10 Reset = 1;
+Run = 1;
+
+end
+endmodule

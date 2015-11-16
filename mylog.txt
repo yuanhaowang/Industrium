@@ -1,0 +1,10 @@
+      1 [main] bash 6636 find_fast_cwd: WARNING: Couldn't compute FAST_CWD pointer.  Please report this problem to
+the public mailing list cygwin@cygwin.com
+Using cable "USB-Blaster [USB-0]", device 1, instance 0x00
+Processor is already paused
+Reading System ID at address 0x000000A0: verified
+Initializing CPU cache (if present)
+OK
+Downloading 10000000 ( 0%)Downloading 100105D4 (89%)Downloaded 66KB in 1.1s (60.0KB/s)
+Verifying 10000000 ( 0%)Verifying 100105D4 (89%)Verified OK                         
+Starting processor at address 0x100001B8

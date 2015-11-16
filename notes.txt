@@ -1,0 +1,43 @@
+-Raster Order = left-right, top-bottom
+-RGB is just electrical signals
+-Draw sprites when needed based on X, Y counter
+-640*480*24, how much RAM needed?
+-RAM needs to be twice as fast as pixel clock to do full frame animation
+-Video DAC, and Drawing Engine
+-Blitter (Drawing Engine) needs to be aware of the screen and ROM layout
+-Draw over same region multiple times to implicitly initiate draw order
+
+-DOUBLE BUFFERING ensures that screen can be drawn as it spans two blanking intervals
+
+640*480*(4 bits per pixel to store rgb values with one unused) = 1228800 bits needed in SRAM (153600 bytes. For double it will be 307200 bytes. Maximum memory is 486000 bytes). Assuming 32 bit data width (one word each), we need 38400 words to store a complete buffer for the video image, with each 640 pixel line requiring 80 words.
+
+Also RAM needs to be twice as fast as pixel clock to do full frame animation.
+
+PNG2HEX converts to B G R, not R G B 
+
+Sub Every128()
+    Dim i As Integer, j As Integer, cl As Range
+    Dim myarray(207, 127) As Integer 'I don't know what your data is.  Mine is integer data
+    'Change 100 to however many rows you have in your original data, divided by seven, round up
+    'remember arrays start at zero, so 6 really is 7
+
+    If MsgBox("Is your entire data selected?", vbYesNo, "Data selected?") <> vbYes Then
+        MsgBox ("First select all your data")
+    End If
+
+    'Read data into array
+    For Each cl In Selection.Cells
+        Debug.Print cl.Value
+        myarray(i, j) = cl.Value
+        If j = 127 Then
+            i = i + 1
+            j = 0
+        Else
+            j = j + 1
+        End If
+    Next
+
+    'Now paste the array for your data into a new worksheet
+    Worksheets.Add
+    Range(Cells(1, 1), Cells(208, 128)) = myarray
+End Sub
