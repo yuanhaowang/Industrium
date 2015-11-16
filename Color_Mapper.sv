@@ -13,10 +13,9 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper ( input [9:0] BallX, BallY, //useless lines
-								input [9:0] DrawX, DrawY, Ball_size,
-								input [10:0] shape_x, //choose x and y to draw at a certain location
-								input [10:0] shape_y, //probably from a sprite.sv helper
+module  color_mapper ( input [9:0] DrawX, DrawY,
+								input [9:0] shape_x, //choose x and y to draw at a certain location
+								input [9:0] shape_y, //probably from a sprite.sv helper
 								input [3:0] sel, //select a sprite
 								output logic [7:0]  Red, Green, Blue,
 								output logic [0:31] data);

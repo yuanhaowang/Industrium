@@ -1,0 +1,5 @@
+How to get the keyboard to take more than one keycode input at a time?
+How to animate?
+How to do parallax?
+Memory constraints?
+Frame Buffer?
