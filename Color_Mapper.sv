@@ -15,10 +15,8 @@
 
 module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
                        output logic [7:0]  Red, Green, Blue,
-							  input[14:0] address,
-								output logic [31:0] data);
+								output logic [0:31] data);
     
-    logic ball_on;
 	 
  /* Old Ball: Generated square box by checking if the current pixel is within a square of length
     2*Ball_Size, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
@@ -32,31 +30,39 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
      this single line is quite powerful descriptively, it causes the synthesis tool to use up three
      of the 12 available multipliers on the chip!  Since the multiplicants are required to be signed,
 	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
-	  
-    int DistX, DistY, Size;
-	 assign DistX = DrawX - BallX;
-    assign DistY = DrawY - BallY;
-    assign Size = Ball_size;
+	logic shape_on; 
+	logic [14:0] shape_x = 0;
+	logic [14:0] shape_y = 0;
+	logic [14:0] shape_x_size = 32;
+	logic [14:0] shape_y_size = 52;	  
 	 
+	logic[14:0] address; 
 	single_port_rom RoM(	.addr(address), 
 								.q(data)
 								);
+	
+    always_comb
+    begin: shape
+        if ((DrawX >= shape_x) && (DrawX < (shape_x+shape_x_size)) &&
+				(DrawY >= shape_y) && (DrawY < (shape_y+shape_y_size)))
+			begin	
+            shape_on = 1'b1;
+				address = (128*DrawY + DrawX);
+			end
+        else 
+		  begin
+            shape_on = 1'b0;
+				address = 0;
+			end
+     end 
 	  
     always_comb
-    begin:Ball_on_proc
-        if ( ( DistX*DistX + DistY*DistY) <= (Size * Size) ) 
-            ball_on = 1'b1;
-        else 
-            ball_on = 1'b0;
-     end 
-       
-    always_comb
     begin:RGB_Display
-        if ((ball_on == 1'b1)) 
+        if ((shape_on == 1'b1) && (data != 32'h00FF0000)) 
         begin 
-            Red = 8'hff;
-            Green = 8'hff;
-            Blue = 8'hff;
+            Red = data[16:23];
+            Green = data[8:15];
+            Blue = data[0:7];
         end       
         else 
         begin 
