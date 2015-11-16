@@ -13,8 +13,12 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
-                       output logic [7:0]  Red, Green, Blue,
+module  color_mapper ( input [9:0] BallX, BallY, //useless lines
+								input [9:0] DrawX, DrawY, Ball_size,
+								input [10:0] shape_x, //choose x and y to draw at a certain location
+								input [10:0] shape_y, //probably from a sprite.sv helper
+								input [3:0] sel, //select a sprite
+								output logic [7:0]  Red, Green, Blue,
 								output logic [0:31] data);
     
 	 
@@ -31,10 +35,8 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
      of the 12 available multipliers on the chip!  Since the multiplicants are required to be signed,
 	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
 	logic shape_on; 
-	logic [14:0] shape_x = 0;
-	logic [14:0] shape_y = 0;
-	logic [14:0] shape_x_size = 32;
-	logic [14:0] shape_y_size = 52;	  
+	logic [10:0] shape_x_size = 32; //specifically for the steampunk sprite.
+	logic [10:0] shape_y_size = 52; //Need more sizes for choosing between different sized sprites.	 
 	 
 	logic[14:0] address; 
 	single_port_rom RoM(	.addr(address), 
@@ -46,8 +48,25 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
         if ((DrawX >= shape_x) && (DrawX < (shape_x+shape_x_size)) &&
 				(DrawY >= shape_y) && (DrawY < (shape_y+shape_y_size)))
 			begin	
-            shape_on = 1'b1;
-				address = (128*DrawY + DrawX);
+            shape_on = 1'b1;			
+				case(sel)
+				4'b0000: address = (128*(DrawY-shape_y) + (DrawX-shape_x)); //top left 1
+				4'b0001: address = (128*(DrawY-shape_y) + (DrawX-shape_x+32)); //2
+				4'b0010: address = (128*(DrawY-shape_y) + (DrawX-shape_x+64)); //3
+				4'b0011: address = (128*(DrawY-shape_y) + (DrawX-shape_x+96)); //4
+				4'b0100: address = (128*(DrawY-shape_y+52) + (DrawX-shape_x)); //5
+				4'b0101: address = (128*(DrawY-shape_y+52) + (DrawX-shape_x+32)); //6
+				4'b0110: address = (128*(DrawY-shape_y+52) + (DrawX-shape_x+64)); //7
+				4'b0111: address = (128*(DrawY-shape_y+52) + (DrawX-shape_x+96)); //8
+				4'b1000: address = (128*(DrawY-shape_y+104) + (DrawX-shape_x)); //9
+				4'b1001: address = (128*(DrawY-shape_y+104) + (DrawX-shape_x+32)); //10
+				4'b1010: address = (128*(DrawY-shape_y+104) + (DrawX-shape_x+64)); //11
+				4'b1011: address = (128*(DrawY-shape_y+104) + (DrawX-shape_x+96)); //12
+				4'b1100: address = (128*(DrawY-shape_y+156) + (DrawX-shape_x)); //13
+				4'b1101: address = (128*(DrawY-shape_y+156) + (DrawX-shape_x+32)); //14
+				4'b1110: address = (128*(DrawY-shape_y+156) + (DrawX-shape_x+64)); //15
+				4'b1111: address = (128*(DrawY-shape_y+156) + (DrawX-shape_x+96)); //bottom right 16
+				endcase
 			end
         else 
 		  begin
