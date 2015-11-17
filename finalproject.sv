@@ -33,8 +33,8 @@ module  finalproject 		( input         CLOCK_50,
 							  output			 DRAM_CLK				// SDRAM Clock
 											);
     
-    logic Reset_h, vssig, Clk;
-    logic [9:0] drawxsig, drawysig, spritexsig, spriteysig;
+    logic Reset_h, vssig, Clk, spriteclk;
+    logic [10:0] drawxsig, drawysig, spritexsig, spriteysig;
 	 logic [3:0] select;
 	 logic [15:0] keycode;
     
@@ -106,7 +106,12 @@ module  finalproject 		( input         CLOCK_50,
 							  .spritey(spriteysig)
 							  );
 							  
-	 spritestate states(.Clk(vssig), //theoretically only every frame creation should prompt change in motion 
+	 clkdiv spriteClk(.Clk(vssig), //vssig is too fast to run sprite stuff, so we put it to 25% duty cycle
+							.Reset(Reset_h),
+							.spriteclk(spriteclk)
+							);						  
+							  
+	 spritestate states(.Clk(spriteclk), //theoretically only every frame creation should prompt change in motion 
 							  .Reset(Reset_h),
 							  .Keycode(keycode), //keyboard input
 						     .motion(select) //how the sprite will move

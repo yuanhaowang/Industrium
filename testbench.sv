@@ -4,7 +4,8 @@ timeunit 10ns;
 
 timeprecision 1ns;
 
-//logic [9:0] BallX, BallY, DrawX, DrawY, Ball_size;
+
+//logic [10:0] BallX, BallY, DrawX, DrawY, Ball_size;
 //logic [10:0] shape_x,shape_y;
 //logic [7:0]  Red, Green, Blue;
 //logic [31:0] data;

@@ -1,4 +1,4 @@
-module  color_mapper ( input [9:0] DrawX, DrawY,
+module  color_mapper ( input [10:0] DrawX, DrawY,
 								input [9:0] shape_x, //choose x and y to draw at a certain location
 								input [9:0] shape_y, //probably from a sprite.sv helper
 								input [3:0] sel, //select a sprite
@@ -10,8 +10,8 @@ module  color_mapper ( input [9:0] DrawX, DrawY,
  */
  
 	logic shape_on; //draw sprite or not. May need more logic for multiple layers.
-	logic [9:0] shape_x_size = 32; //specifically for the steampunk sprite.
-	logic [9:0] shape_y_size = 52; //Need more sizes for choosing between different sized sprites.	 
+	logic [10:0] shape_x_size = 32; //specifically for the steampunk sprite.
+	logic [10:0] shape_y_size = 52; //Need more sizes for choosing between different sized sprites.	 
 	 
 	logic[14:0] address; 
 	single_port_rom RoM(	.addr(address), //instantiated ROM containing sprite 

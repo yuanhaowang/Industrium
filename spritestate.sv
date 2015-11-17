@@ -7,6 +7,7 @@ module spritestate(input Clk, Reset, //I assume the clock is the vertical sync? 
 * is taken for the sprite. For instance the walking right animation is 4 spirtes
 * so we need a way to make it cycle through those 4 before repeating.		   
 * THIS IS ONLY FOR THE STEAMPUNK FIGURE. But can be modified for any sprite movement.
+* SPAZZES OUT TOO MUCH
 */
 enum logic[3:0] {LEFTREST, LEFTMOVE, LEFTMOVE2, LEFTREST2, 
 					RIGHTREST, RIGHTMOVE, RIGHTMOVE2, RIGHTREST2, 
@@ -16,6 +17,7 @@ enum logic[3:0] {LEFTREST, LEFTMOVE, LEFTMOVE2, LEFTREST2,
 * we're going right, and we're not pressing the right arrow, then we want
 * the sprite to face right. Vice versa for left
 */
+
 //Internal state logic
 //Assign "next_state based on "state" and "Execute"
 
