@@ -104,14 +104,9 @@ module  finalproject 		( input         CLOCK_50,
 							  .Keycode(keycode),
 							  .spritex(spritexsig), 
 							  .spritey(spriteysig)
-							  );
+							  );			  
 							  
-	 clkdiv spriteClk(.Clk(vssig), //vssig is too fast to run sprite stuff, so we put it to 25% duty cycle
-							.Reset(Reset_h),
-							.spriteclk(spriteclk)
-							);						  
-							  
-	 spritestate states(.Clk(spriteclk), //theoretically only every frame creation should prompt change in motion 
+	 spritestate states(.Clk(vssig), //theoretically only every frame creation should prompt change in motion 
 							  .Reset(Reset_h),
 							  .Keycode(keycode), //keyboard input
 						     .motion(select) //how the sprite will move

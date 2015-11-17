@@ -20,13 +20,19 @@ enum logic[3:0] {LEFTREST, LEFTMOVE, LEFTMOVE2, LEFTREST2,
 
 //Internal state logic
 //Assign "next_state based on "state" and "Execute"
+logic [1:0] counter = 0; //counter to slow draw so that character moves fluidly
 
 always_ff@(posedge Clk or posedge Reset)
 	begin 
 		if(Reset)
-			curr_state = RWAIT; //default to looking right
+			curr_state <= RWAIT; //default to looking right
+		else if (counter == 2'b11)
+			begin
+				curr_state <= next_state;
+				counter <= 0;
+			end
 		else
-			curr_state  = next_state;
+			counter <= counter + 1;
 	end
 
 		//Assign outputs based on "state"
