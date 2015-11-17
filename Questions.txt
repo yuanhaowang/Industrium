@@ -2,5 +2,6 @@ How to get the keyboard to take more than one keycode input at a time?
 How to animate?
 How to do parallax?
 Memory constraints? (Check if our sprite implementation is correct)
+(Check the .hex file to see if we have to convert to 8 bit color)
 Frame Buffer?
 What should we implement in C but not in hardware?

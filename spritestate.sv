@@ -147,7 +147,7 @@ always_comb
 			RIGHTREST: motion = 4'b1000; //movements right
 			RIGHTMOVE: motion = 4'b1001;
 			RIGHTREST2: motion = 4'b1010;	  
-			RIGHTMOVE2:	motion = 4'b1011;					
+			RIGHTMOVE2: motion = 4'b1011;					
 
 /*****************LEFT*************************/					
 			LEFTREST: motion = 4'b0100; //movements left
