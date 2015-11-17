@@ -430,10 +430,10 @@ int main(void)
 	IO_write(HPI_ADDR,0x0508);
 	usb_ctl_val = IO_read(HPI_DATA);
 	printf("[ENUM PROCESS]:step 8 TD Control Byte is %x\n",usb_ctl_val);
-	while (usb_ctl_val != 0x03)
+/*	while (usb_ctl_val != 0x03)
 	{
 		usb_ctl_val = UsbGetRetryCnt();
-	}
+	}*/
 
 	printf("------------[ENUM PROCESS]:get descriptor (class 0x21) done!-------------------\n");
 
@@ -457,10 +457,10 @@ int main(void)
 	IO_write(HPI_ADDR,0x0508);
 	usb_ctl_val = IO_read(HPI_DATA);
 	printf("[ENUM PROCESS]: step 9 TD Control Byte is %x\n",usb_ctl_val);
-	while (usb_ctl_val != 0x03)
+/*	while (usb_ctl_val != 0x03)
 	{
 		usb_ctl_val = UsbGetRetryCnt();
-	}
+	}*/
 
 	printf("---------------[ENUM PROCESS]:get descriptor (class 0x22) done!----------------\n");
 

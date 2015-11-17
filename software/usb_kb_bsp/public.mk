@@ -83,7 +83,7 @@ ACDS_VERSION := 14.0
 
 # This following BUILD_NUMBER comment indicates the build number of the tool 
 # used to generate this makefile. 
-# BUILD_NUMBER: 200
+# BUILD_NUMBER: 209
 
 # Quartus Generated JDI File. Required for resolving node instance ID's with 
 # design component names. 
@@ -156,9 +156,9 @@ SOPC_SYSID_FLAG += --sidp=0xa0
 ELF_PATCH_FLAG  += --sidp 0xa0
 
 # The SOPC Timestamp 
-# setting SOPC_TIMESTAMP is 1445190487
-SOPC_SYSID_FLAG += --timestamp=1445190487
-ELF_PATCH_FLAG  += --timestamp 1445190487
+# setting SOPC_TIMESTAMP is 1447644765
+SOPC_SYSID_FLAG += --timestamp=1447644765
+ELF_PATCH_FLAG  += --timestamp 1447644765
 
 # Enable JTAG UART driver to recover when host is inactive causing buffer to 
 # full without returning error. Printf will not fail with this recovery. none 
