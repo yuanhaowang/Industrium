@@ -28,12 +28,12 @@ initial begin: TEST_VECTORS
 	#10 Reset = 1;
 	#10 Reset = 0;
 	
-	#10 Keycode = 'd80; //left
-	#10 Keycode = 'd79; //right
-	#10 Keycode = 0; //should face right
-	#10 Keycode = 'd79; //right
-	#10 Keycode = 'd80; //left
-	#10 Keycode = 0; //should face left	
+	#40 Keycode = 'd80; //left
+	#40 Keycode = 'd79; //right
+	#40 Keycode = 0; //should face right
+	#40 Keycode = 'd79; //right
+	#40 Keycode = 'd80; //left
+	#40 Keycode = 0; //should face left	
 end
 
 //initial begin: TEST_VECTORS
