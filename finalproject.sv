@@ -1,15 +1,3 @@
-//-------------------------------------------------------------------------
-//      lab7_usb.sv                                                      --
-//      Christine Chen                                                   --
-//      Fall 2014                                                        --
-//                                                                       --
-//      Fall 2014 Distribution                                           --
-//                                                                       --
-//      For use with ECE 385 Lab 7                                       --
-//      UIUC ECE Department                                              --
-//-------------------------------------------------------------------------
-
-
 module  finalproject 		( input         CLOCK_50,
                        input[3:0]    KEY, //bit 0 is set up as Reset
 							  output [6:0]  HEX0, HEX1,// HEX2, HEX3, HEX4, HEX5, HEX6, HEX7,
@@ -46,7 +34,8 @@ module  finalproject 		( input         CLOCK_50,
 											);
     
     logic Reset_h, vssig, Clk;
-    logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig;
+    logic [9:0] drawxsig, drawysig, spritexsig, spriteysig;
+	 logic [3:0] select;
 	 logic [15:0] keycode;
     
 	 assign Clk = CLOCK_50;
@@ -110,32 +99,34 @@ module  finalproject 		( input         CLOCK_50,
    
 	 assign vssig = VGA_VS;
 	
-    ball ball_instance(.Reset(Reset_h), 
+    sprite_controller sprite(.Reset(Reset_h), 
 							  .frame_clk(vssig), //clocked on VSYNC as detailed in vga tutorial
 							  .Keycode(keycode),
-							  .BallX(ballxsig), 
-							  .BallY(ballysig), 
-							  .BallS(ballsizesig)
+							  .spritex(spritexsig), 
+							  .spritey(spriteysig)
 							  );
-   
-    color_mapper color_instance(.BallX(ballxsig), 
-										.BallY(ballysig), 
-										.DrawX(drawxsig), 
-										.DrawY(drawysig), 
-										.Ball_size(ballsizesig),
-										.Red(VGA_R), 
+							  
+	 spritestate states(.Clk(vssig), //theoretically only every frame creation should prompt change in motion 
+							  .Reset(Reset_h),
+							  .Keycode(keycode), //keyboard input
+						     .motion(select) //how the sprite will move
+							  );						  
+							  
+   /*Possible timing issue between spritestatae and sprite_controller?
+	* Ideally we need both motion and spritex and spritey to be coordinated 
+	* so that color_mapper can map the correct color.
+	*/
+	
+    color_mapper color_instance(.DrawX(drawxsig), 
+										.DrawY(drawysig), //draw signal from vga controller
+										.shape_x(spritexsig), //sprite x and y from sprite controller
+										.shape_y(spriteysig),
+										.sel(select), //input sprite selection
+										.Red(VGA_R), //output color
 										.Green(VGA_G), 
 										.Blue(VGA_B) 
 										);								
 										  
 	 HexDriver hex_inst_0 (keycode[3:0], HEX0);
 	 HexDriver hex_inst_1 (keycode[7:4], HEX1);
-    
-
-	 /**************************************************************************************
-	    ATTENTION! Please answer the following quesiton in your lab report! Points will be allocated for the answers!
-		 Hidden Question #1/2:
-          What are the advantages and/or disadvantages of using a USB interface over PS/2 interface to
-			 connect to the keyboard? List any two.  Give an answer in your Post-Lab.
-     **************************************************************************************/
 endmodule

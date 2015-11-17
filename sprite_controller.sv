@@ -1,6 +1,5 @@
 module  sprite_controller ( input Reset, frame_clk, //only update at vertical sync
 									input [7:0] Keycode, //from keyboard
-									output [3:0] sel, //select the sprite
 									output [9:0]  spritex, spritey);
 									
 /**********************WE ONLY CARE ABOUT MOVING RIGHT SO SEL 8 to 11*********************************/	
@@ -41,17 +40,16 @@ or some kind of c code to tell the system that moving right cycles through 4 dif
 //						Sprite_YMotion <= (~(Sprite_YStep) + 1'b1); //go in -y direction
 //					end
 				  
-				  'd80: //Left. Used only for testing
+				  'd80: //Left
 					begin
 						Sprite_YMotion <= 10'd0;
-						Sprite_XMotion <= (~(Sprite_XStep) + 1'b1);
+						Sprite_XMotion <= (~(Sprite_XStep) + 1'b1); //left
 					end
 					
 				  'd79://Right
 					begin
 						Sprite_YMotion <= 10'd0; //stop y motion
 						Sprite_XMotion <= Sprite_XStep; //go in x motion
-						sel = 4'b1001; //moving right
 					end
 					
 //				  'd81://Down INSTANTIATE LATER
@@ -64,7 +62,6 @@ or some kind of c code to tell the system that moving right cycles through 4 dif
 					begin
 						Sprite_YMotion <= 10'd0; //Stop
 						Sprite_XMotion <= 10'd0; //Moving
-						sel = 4'b1000; //set to non moving sprite
 					end
 					
 				endcase
