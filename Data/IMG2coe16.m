@@ -20,7 +20,7 @@ Rb = dec2bin(R,8);
 Gb = dec2bin(G,8);
 Bb = dec2bin(B,8);
 img2(r,c,1) = bin2dec([Rb(1:5) '000']);
-img2(r,c,2) = bin2dec([Gb(1:6) '000']);
+img2(r,c,2) = bin2dec([Gb(1:6) '00']);
 img2(r,c,3) = bin2dec([Bb(1:5) '000']);
 Outbyte = [ Rb(1:5) Gb(1:6) Bb(1:5)];
 if (Outbyte(1:4) == '0000')
