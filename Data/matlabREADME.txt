@@ -5,4 +5,4 @@ IMG2coe24: 24 bit true color with RGB(8:8:8). Indexed (R7->R0,G7->G0,B7->B0).
 
 FYI: Green is favored because it is more sensitive to the eye.
 
-To parse data for VGA 24-bit colors, just take the corresponding colors (e.g. R2->R0) and zero-extend the value on the right to fill up eight bits (for example, just (R2->R0)<<4).
+To parse data for VGA 24-bit colors, just take the corresponding colors (e.g. R2->R0) and zero-extend the value on the right to fill up eight bits (for example, just (R2->R0)<<5).
